@@ -153,7 +153,7 @@ public class Payment {
 
 				output = "Deleted successfully";
 			} catch (Exception e) {
-				output = "Error while deleting the item.";
+				output = "Error while deleting";
 				System.err.println(e.getMessage());
 			}
 
