@@ -40,7 +40,7 @@ public class Payment {
 				}
 
 				// Prepare the html table to be displayed
-				output = "<table border=\"1\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Date and Time</th><th>Remove</th></tr>";
+				output = "<table border=\"1\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Remove</th></tr>";
 
 				String query = "select * from payment";
 				Statement stmt = con.createStatement();
@@ -55,7 +55,7 @@ public class Payment {
 					String booknCharges = Double.toString(rs.getDouble("booknCharges"));
 					String hosptlCharges = Double.toString(rs.getDouble("hosptlCharges"));
 					String pharmBill = Double.toString(rs.getDouble("pharmBill"));
-					String dateTime = toString(); 
+					
 					
 
 					// Add into the html table
@@ -101,8 +101,8 @@ public class Payment {
 				}
 				
 				// create a prepared statement
-				String query = "INSERT INTO `payment`(`paymentId`, `docName`, `patiName`, `docCharges`, `booknCharges`, `hosptlCharges`, `pharmeasyBill`, `dateTime`)" 
-				+ "VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+				String query = "INSERT INTO `payment`(`paymentId`, `docName`, `patiName`, `docCharges`, `booknCharges`, `hosptlCharges`, `pharmeasyBill`)" 
+				+ "VALUES (?,?,?,?,?,?,?)";
 				
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				
