@@ -17,20 +17,8 @@ if (request.getParameter("firstName") != null) {
 		request.getParameter("address"), request.getParameter("description"),
 		request.getParameter("speciality"), request.getParameter("qualification"),
 		request.getParameter("gender"), request.getParameter("phoneNo"));
-	} else//Update----------------------
-	{
-		stsMsg = itemObj.updatedocter(request.getParameter("hidItemIDSave"), request.getParameter("firstName"),
-		request.getParameter("lastName"), request.getParameter("address"), request.getParameter("description"),
-		request.getParameter("speciality"), request.getParameter("qualification"),
-		request.getParameter("gender"), request.getParameter("phoneNo"));
 	}
-	session.setAttribute("statusMsg", stsMsg);
-}
-//Delete-----------------------------
-if (request.getParameter("hidItemIDDelete") != null) {
-	Docter itemObj = new Docter();
-	String stsMsg = itemObj.deletedocter(request.getParameter("hidItemIDDelete"));
-	session.setAttribute("statusMsg", stsMsg);
+	
 }
 %>
 
@@ -88,6 +76,8 @@ if (request.getParameter("hidItemIDDelete") != null) {
 					<br> <input id="btnSave" name="btnSave" type="button"
 						value="Save" class="btn btn-primary"> <input type="hidden"
 						id="hidItemIDSave" name="hidItemIDSave" value="">
+						
+						
 				</form>
 
 				<div id="alertSuccess" class="alert alert-success">
@@ -99,10 +89,6 @@ if (request.getParameter("hidItemIDDelete") != null) {
 
 				<br>
 
-				<%
-					Docter itemObj = new Docter();
-				out.print(itemObj.readdocter());
-				%>
 
 
 			</div>

@@ -1,4 +1,4 @@
-package com;
+package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -71,7 +71,7 @@ public class Docter {
 				return "Error while connecting to the database for reading.";
 			}
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>firstName</th> <th>lastName</th> <th>address</th>  <th>description</th> <th>speciality</th> <th>qualification</th> <th>gender</th>  <th>phoneNo</th>	 <th>Update</th> <th>Remove</th></tr>";
+			output = "<table border=\"1\"><tr><th>firstName</th> <th>lastName</th> <th>address</th>  <th>description</th> <th>speciality</th> <th>qualification</th> <th>gender</th>  <th>phoneNo</th>	 <th>Update</th> <th>Remove</th>  </tr>";
 
 			String query = "select * from docter";
 			Statement stmt = con.createStatement();
@@ -100,7 +100,7 @@ public class Docter {
 				output += "<td>" + phoneNo + "</td>";
 				// buttons
 				output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\" btnUpdate btn btn-secondary\"></td> <td><form method=\"post\" action=\"docter.jsp\">  <input name=\"btnRemove\" type=\"submit\" value=\"Remove\" class=\"btn btn-danger\">  <input name=\"hidItemIDDelete\" type=\"hidden\" value=\""
-						+ docID + "\">" + "</form></td></tr>";
+						+ docID + "\">" + "</form></td>      </tr>";
 			}
 			con.close();
 

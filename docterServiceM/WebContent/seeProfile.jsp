@@ -11,25 +11,15 @@ System.out.println("Tryingto process...");
 if (request.getParameter("firstName") != null) {
 	Docter itemObj = new Docter();
 	String stsMsg = "";
-	//Insert--------------------------
-	if (request.getParameter("hidItemIDSave") == "") {
-		stsMsg = itemObj.insertdocter(request.getParameter("firstName"), request.getParameter("lastName"),
-		request.getParameter("address"), request.getParameter("description"),
-		request.getParameter("speciality"), request.getParameter("qualification"),
-		request.getParameter("gender"), request.getParameter("phoneNo"));
-	} else//Update----------------------
+
+	if (request.getParameter("hidItemIDSave") == "")
+		//Update----------------------
 	{
 		stsMsg = itemObj.updatedocter(request.getParameter("hidItemIDSave"), request.getParameter("firstName"),
 		request.getParameter("lastName"), request.getParameter("address"), request.getParameter("description"),
 		request.getParameter("speciality"), request.getParameter("qualification"),
 		request.getParameter("gender"), request.getParameter("phoneNo"));
 	}
-	session.setAttribute("statusMsg", stsMsg);
-}
-//Delete-----------------------------
-if (request.getParameter("hidItemIDDelete") != null) {
-	Docter itemObj = new Docter();
-	String stsMsg = itemObj.deletedocter(request.getParameter("hidItemIDDelete"));
 	session.setAttribute("statusMsg", stsMsg);
 }
 %>
@@ -98,13 +88,6 @@ if (request.getParameter("hidItemIDDelete") != null) {
 				<div id="alertError" class="alert alert-danger"></div>
 
 				<br>
-
-				<%
-					Docter itemObj = new Docter();
-				out.print(itemObj.readdocter());
-				%>
-
-
 			</div>
 		</div>
 	</div>
