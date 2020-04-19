@@ -70,7 +70,7 @@ public class Hospital {
 				return "Error while connecting to the database for reading.";
 			}
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>Hospital Name</th> <th>Hospital Address</th> <th>Hospital Phone No</th> <th>Hospital Email</th> <th>No Of Rooms</th> <th>Update</th> <th>Remove</th></tr>";
+			output = "<table border=\"1\" width= \"100%\"><tr><th>Hospital Name</th> <th>Hospital Address</th> <th>Hospital Phone No</th> <th>Hospital Email</th> <th>No Of Rooms</th> <th>Update</th> <th>Remove</th></tr>";
 
 			String query = "select * from hospitals";
 			Statement stmt = con.createStatement();
