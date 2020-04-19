@@ -36,7 +36,7 @@ public class Payment {
 			}
 
 			// Prepare the html table to be displayed
-			output = "<table border=\\\"1\\\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Remove</th></tr>";
+			output = "<table border=\\\"1\\\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Update</th><th>Remove</th></tr>";
 
 			String query = "select * from payment";
 			Statement stmt = con.createStatement();
@@ -152,7 +152,9 @@ public class Payment {
 		return output;
 	}
 	
-	public String updatePayment(String paymentId,String docName, String patiName, String docCharges, String booknCharges,String hosptlCharges, String pharmBill) {
+	
+	
+	public String updatePayment(int paymentId,String docName, String patiName, String docCharges, String booknCharges,String hosptlCharges, String pharmBill) {
 		String output = "";
 
 		try {
@@ -163,17 +165,18 @@ public class Payment {
 			}
 
 			// create a prepared statement
-			String query = "UPDATE `payment` SET `docName`=?,`patiName`=?,`docCharges`=?,`booknCharges`=?,`hosptlCharges`=?,`pharmeasyBill`=?";
+			String query = "UPDATE `payment` SET `docName`=?,`patiName`=?,`docCharges`=?,`booknCharges`=?,`hosptlCharges`=?,`pharmeasyBill`=?WHERE paymentId=?";
 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
-			preparedStmt.setInt(1, 0);
-			preparedStmt.setString(2, docName);
-			preparedStmt.setString(3, patiName);
-			preparedStmt.setDouble(4, Double.parseDouble(docCharges));
-			preparedStmt.setDouble(5, Double.parseDouble(booknCharges));
-			preparedStmt.setDouble(6, Double.parseDouble(hosptlCharges));
-			preparedStmt.setDouble(7, Double.parseDouble(pharmBill));
+			// binding values
+			preparedStmt.setString(1, docName);
+			preparedStmt.setString(2, patiName);
+			preparedStmt.setDouble(3, Double.parseDouble(docCharges));
+			preparedStmt.setDouble(4, Double.parseDouble(booknCharges));
+			preparedStmt.setDouble(5, Double.parseDouble(hosptlCharges));
+			preparedStmt.setDouble(6, Double.parseDouble(pharmBill));
+			preparedStmt.setInt(7, paymentId);
 
 
 

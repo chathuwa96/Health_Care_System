@@ -31,7 +31,7 @@ import com.google.gson.JsonParser;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
+@Path("/myresource")
 public class MyResource {
 
 	Payment payObj = new Payment();
@@ -62,6 +62,7 @@ public class MyResource {
     	return output; 
     }
 	
+	
 	@PUT 
     @Path("/update") 
     @Consumes(MediaType.APPLICATION_JSON) 
@@ -69,17 +70,20 @@ public class MyResource {
     public String updateItem(String itemData) {  
 
     	//Convert the input string to a JSON object  
-    	JsonObject payObj = new JsonParser().parse(itemData).getAsJsonObject(); 
+    	JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject(); 
      
     	//Read the values from the JSON object 
-    	int paymentId = payObj.get("paymentId").getAsInt();  
-    	String docName = payObj.get("docName").getAsString();  
-    	String docCharges = payObj.get("docCharges").getAsString();  
-    	String booknCharges = payObj.get("booknCharges").getAsString();  
-    	String hosptlCharges = payObj.get("hosptlCharges").getAsString();  
-    	String pharmBill = payObj.get("pharmeasyBill").getAsString(); 
+    	 
+    	int paymentId = itemObject.get("paymentId").getAsInt();
+    	String patiName = itemObject.get("patiName").getAsString(); 
+    	String docName = itemObject.get("docName").getAsString();  
+    	String docCharges = itemObject.get("docCharges").getAsString();  
+    	String booknCharges = itemObject.get("booknCharges").getAsString();  
+    	String hosptlCharges = itemObject.get("hosptlCharges").getAsString();  
+    	String pharmBill = itemObject.get("pharmeasyBill").getAsString(); 
      
-        String output = payObj.updatePayment(paymentId,docName, docCharges,  booknCharges, hosptlCharges, pharmBill); 
+     
+        String output = payObj.updatePayment(paymentId,docName,patiName,docCharges,booknCharges,hosptlCharges,pharmBill); 
      
     	return output; 
     } 
@@ -101,5 +105,5 @@ public class MyResource {
 	    
 	   	return output; 
 	   	
-	   }
+	   } 
 }
