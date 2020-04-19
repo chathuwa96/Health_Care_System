@@ -5,9 +5,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Appointment {
+
+	public Appointment(int int1, String string, String string2, String string3, String string4, String string5) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Appointment() {
+		// TODO Auto-generated constructor stub
+	}
+
 
 	private Connection connect() {
 		Connection con = null;
@@ -38,7 +50,7 @@ public class Appointment {
 			}
 
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>appointmentID</th><th>patientID</th><th>Date</th><th>DoctorName</th><th>HospitalName</th> <th>AppointmentType </th><th>Update</th><th>Remove</th></tr>";
+			output = "<table border=\"1\"><tr><th>appointmentID</th><th>patientID</th><th>Date</th><th>docName</th><th>hosName</th> <th>appType </th><th>Update</th><th>Remove</th></tr>";
 
 			String query = "select * from appointment";
 			Statement stmt = con.createStatement();
@@ -204,5 +216,68 @@ public class Appointment {
 
 		return output;
 	}
+	
+	
+	/////////////////// Search ////////////////////////
+	
+	public List<AppointmentBean> viewPatient(String id) {
+		List<AppointmentBean> appList = new ArrayList<>();
+
+		try {
+			Connection con = connect();
+			if (con == null) {
+
+				System.out.println("Error While reading from database");
+				return appList;
+			}
+
+			String query;
+
+			if (id == null) {
+				query = "select * from appointment";
+			} else {
+				query = "select * from appointment where appointmentID=" + id;
+			}
+			Statement stmt = con.createStatement();
+			ResultSet results = stmt.executeQuery(query);
+
+			while (results.next()) {
+				AppointmentBean appoint = new AppointmentBean(results.getInt("appointmentID"), 
+								results.getString("patientID"),
+								results.getString("date"),
+								results.getString("docName"),							
+								results.getString("hosName"), 
+								results.getString("appType")
+
+				);
+				appList.add(appoint);
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println("Error While Reading");
+			System.err.println(e.getMessage());
+		}
+
+		return appList;
+	}
+
+	public List<AppointmentBean> viewPatientByID(String appointmentID) {
+
+		List<AppointmentBean> AppointmentBean = new ArrayList<>();
+
+		for (AppointmentBean sch : viewPatient(appointmentID)) {
+
+			if (appointmentID.equals(sch.getAppointmentID())) {
+
+				AppointmentBean.add(sch);
+			}
+		}
+
+		return AppointmentBean;
+	}
+
+
+
+	
 	
 }
