@@ -186,7 +186,7 @@ public class Payment {
 
 			output = "Updated successfully";
 		} catch (Exception e) {
-			output = "Error while updating the Appointment.";
+			output = "Error while updating the Payment.";
 			System.err.println(e.getMessage());
 		}
 
