@@ -92,7 +92,7 @@ public class Payment {
 
 			if (con == null) {
 
-				return "DB Insert error.";
+				return "Error while connecting to the database for deleting.";
 			}
 			
 			// create a prepared statement
@@ -112,7 +112,7 @@ public class Payment {
 			output = "Inserted successfully";
 
 		} catch (Exception e) {
-			output = "Error while inserting";
+			output = "Error while inserting the payment";
 			System.err.println(e.getMessage());
 			System.out.println("not insert");
 		}
@@ -145,7 +145,7 @@ public class Payment {
 
 			output = "Deleted successfully";
 		} catch (Exception e) {
-			output = "Error while deleting the appointment.";
+			output = "Error while deleting the payment.";
 			System.err.println(e.getMessage());
 		}
 

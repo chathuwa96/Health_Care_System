@@ -31,7 +31,7 @@ import com.google.gson.JsonParser;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("/myresource")
+@Path("myresource")
 public class MyResource {
 
 	Payment payObj = new Payment();
