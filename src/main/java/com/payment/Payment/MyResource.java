@@ -50,20 +50,6 @@ public class MyResource {
 		return payObj.readItems();
 	}
 
-	/*@POST
-	@Path("/insert")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String insertItem(@FormParam("paymentId") String paymentId, 
-							@FormParam("docName") String docName,
-							@FormParam("patiName") String patiName, 
-							@FormParam("docCharges") String docCharges,
-							@FormParam("booknCharges") String booknCharges, 
-							@FormParam("hosptlCharges") String hosptlCharges,
-							@FormParam("pharmBill") String pharmBill) {
-		String output = payObj.insertPayment(docName, patiName, docCharges, booknCharges, hosptlCharges, pharmBill);
-		return output;
-	}*/
 	
 	
 	@POST 

@@ -104,16 +104,17 @@ public class Payment {
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(100, docName);
 			preparedStmt.setString(100, patiName);
-			preparedStmt.setDouble(4, Double.parseDouble(docCharges));
-			preparedStmt.setDouble(4, Double.parseDouble(booknCharges));
-			preparedStmt.setDouble(4, Double.parseDouble(hosptlCharges));
-			preparedStmt.setDouble(4, Double.parseDouble(pharmBill));
+			preparedStmt.setDouble(100, Double.parseDouble(docCharges));
+			preparedStmt.setDouble(100, Double.parseDouble(booknCharges));
+			preparedStmt.setDouble(100, Double.parseDouble(hosptlCharges));
+			preparedStmt.setDouble(100, Double.parseDouble(pharmBill));
 
 			output = "Inserted successfully";
 
 		} catch (Exception e) {
-			output = "Error while inserting the item.";
+			output = "Error while inserting";
 			System.err.println(e.getMessage());
+			System.out.println("not insert");
 		}
 
 		return output;
