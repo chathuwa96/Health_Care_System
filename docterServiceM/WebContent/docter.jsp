@@ -40,7 +40,18 @@ if (request.getParameter("hidItemIDDelete") != null) {
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Items Management</title>
+<title>Doctor Management</title>
+
+<style>
+div.container {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+	width: 96%;
+	margin: auto;
+}
+</style>
+
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.2.1.min.js"></script>
 <script src="Components/items.js"></script>
@@ -48,9 +59,11 @@ if (request.getParameter("hidItemIDDelete") != null) {
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="cal-6">
 
-				<h1>Doctor Management</h1>
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+
+				<h1 align="center">Doctor Management</h1>
 
 				<form id="formItem" name="formItem" method="post"
 					action="docter.jsp">
@@ -86,8 +99,8 @@ if (request.getParameter("hidItemIDDelete") != null) {
 					</select><br> <br> Phone Number: <input id="phoneNo"
 						name="phoneNo" type="text" class="form-control form-control-sm">
 					<br> <input id="btnSave" name="btnSave" type="button"
-						value="Save" class="btn btn-primary"> <input type="hidden"
-						id="hidItemIDSave" name="hidItemIDSave" value="">
+						value="Save" class="btn btn-primary btn-lg btn-block"> <input
+						type="hidden" id="hidItemIDSave" name="hidItemIDSave" value="">
 				</form>
 
 				<div id="alertSuccess" class="alert alert-success">
@@ -99,12 +112,27 @@ if (request.getParameter("hidItemIDDelete") != null) {
 
 				<br>
 
-				<%
-					Docter itemObj = new Docter();
-				out.print(itemObj.readdocter());
-				%>
+
+				<div class="col-sm-2"></div>
+			</div>
+		</div>
+		<br> <br>
+
+		<div class="container">
+			<br>
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-10">
+
+					<%
+						Docter itemObj = new Docter();
+					out.print(itemObj.readdocter());
+					%>
 
 
+				</div>
+
+				<div class="col-sm-1"></div>
 			</div>
 		</div>
 	</div>

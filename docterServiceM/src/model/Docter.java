@@ -22,7 +22,8 @@ public class Docter {
 		return con;
 	}
 
-	public String insertdocter(String firstName, String lastName, String address, String description,String speciality,String qualification,String gender,String phoneNo) {
+	public String insertdocter(String firstName, String lastName, String address, String description, String speciality,
+			String qualification, String gender, String phoneNo) {
 		String output = "";
 
 		try {
@@ -62,7 +63,6 @@ public class Docter {
 		return output;
 	}
 
-
 	public String readdocter() {
 		String output = "";
 		try {
@@ -71,7 +71,7 @@ public class Docter {
 				return "Error while connecting to the database for reading.";
 			}
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>firstName</th> <th>lastName</th> <th>address</th>  <th>description</th> <th>speciality</th> <th>qualification</th> <th>gender</th>  <th>phoneNo</th>	 <th>Update</th> <th>Remove</th>  </tr>";
+			output = "<table border=\"1\" width=\"100%\"><tr><th>firstName</th> <th>lastName</th> <th>address</th>  <th>description</th> <th>speciality</th> <th>qualification</th> <th>gender</th>  <th>phoneNo</th>	 <th>Update</th> <th>Remove</th>  </tr>";
 
 			String query = "select * from docter";
 			Statement stmt = con.createStatement();
@@ -87,10 +87,10 @@ public class Docter {
 				String qualification = rs.getString("qualification");
 				String gender = rs.getString("gender");
 				String phoneNo = rs.getString("phoneNo");
-			
+
 				// Add into the html table
 				output += "<tr><td><input id=\"hidItemIDUpdate\" name=\"hidItemIDUpdate\" type=\"hidden\" value=\""
-				+ docID + "\">" + firstName + "</td>";
+						+ docID + "\">" + firstName + "</td>";
 				output += "<td>" + lastName + "</td>";
 				output += "<td>" + address + "</td>";
 				output += "<td>" + description + "</td>";
@@ -114,78 +114,58 @@ public class Docter {
 		}
 		return output;
 	}
-	
-	
-	public String updatedocter(String docID,String firstName, String lastName, String address, String description,String speciality,String qualification,String gender,String phoneNo)
-	 {
-	 String output = "";
-	 try
-	 {
-	 Connection con = connect();
-	 if (con == null)
-	 {return "Error while connecting to the database for updating."; }
-	 // create a prepared statement
-	 String query = "UPDATE docter SET firstName=?, lastName=?, address=?, description=?, speciality=?, qualification=?, gender=?, phoneNo=? WHERE docID=?";
-	 PreparedStatement preparedStmt = con.prepareStatement(query); 
-	 // binding values
-	 preparedStmt.setString(1, firstName);
-	 preparedStmt.setString(2, lastName);
-	 preparedStmt.setString(3, address);
-	 preparedStmt.setString(4, description);
-	 preparedStmt.setString(5, speciality);
-	 preparedStmt.setString(6, qualification);
-	 preparedStmt.setString(7, gender);
-	 preparedStmt.setString(8, phoneNo);
-	 preparedStmt.setInt(9, Integer.parseInt(docID));
-	 // execute the statement
-	 preparedStmt.execute();
-	 con.close();
-	 output = "Updated successfully";
-	 }
-	 catch (Exception e)
-	 {
-	 output = "Error while updating the item.";
-	 System.err.println(e.getMessage());
-	 }
-	 return output;
-	 } 
-	
-	
-	/*public String updatedocter(String docID,String firstName, String lastName, String address, String description,String speciality,String qualification,String gender,String phoneNo)
-	 {
-	 String output = "";
-	 try
-	 {
-	 Connection con = connect();
-	 if (con == null)
-	 {return "Error while connecting to the database for updating."; }
-	 // create a prepared statement
-	 String query = "UPDATE items SET firstName=?,lastName=?,address=?,description=?,speciality=?,qualification=?,gender=?,phoneNo=? WHERE itemID=?";
-	 PreparedStatement preparedStmt = con.prepareStatement(query);
-	 // binding values
-	 	preparedStmt.setInt(1, 0);
-		preparedStmt.setString(2, firstName);
-		preparedStmt.setString(3, lastName);
-		preparedStmt.setString(4, address);
-		preparedStmt.setString(5, description);
-		preparedStmt.setString(6, speciality);
-		preparedStmt.setString(7, qualification);
-		preparedStmt.setString(8, gender);
-		preparedStmt.setString(9, phoneNo);
-	 // execute the statement
-	 preparedStmt.execute();
-	 con.close();
-	 output = "Updated successfully";
-	 }
-	 catch (Exception e)
-	 {
-	 output = "Error while updating the item.";
-	 System.err.println(e.getMessage());
-	 }
-	 return output;
-	 } */
-	
-	
+
+	public String updatedocter(String docID, String firstName, String lastName, String address, String description,
+			String speciality, String qualification, String gender, String phoneNo) {
+		String output = "";
+		try {
+			Connection con = connect();
+			if (con == null) {
+				return "Error while connecting to the database for updating.";
+			}
+			// create a prepared statement
+			String query = "UPDATE docter SET firstName=?, lastName=?, address=?, description=?, speciality=?, qualification=?, gender=?, phoneNo=? WHERE docID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			// binding values
+			preparedStmt.setString(1, firstName);
+			preparedStmt.setString(2, lastName);
+			preparedStmt.setString(3, address);
+			preparedStmt.setString(4, description);
+			preparedStmt.setString(5, speciality);
+			preparedStmt.setString(6, qualification);
+			preparedStmt.setString(7, gender);
+			preparedStmt.setString(8, phoneNo);
+			preparedStmt.setInt(9, Integer.parseInt(docID));
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			output = "Updated successfully";
+		} catch (Exception e) {
+			output = "Error while updating the item.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
+	/*
+	 * public String updatedocter(String docID,String firstName, String lastName,
+	 * String address, String description,String speciality,String
+	 * qualification,String gender,String phoneNo) { String output = ""; try {
+	 * Connection con = connect(); if (con == null) {return
+	 * "Error while connecting to the database for updating."; } // create a
+	 * prepared statement String query =
+	 * "UPDATE items SET firstName=?,lastName=?,address=?,description=?,speciality=?,qualification=?,gender=?,phoneNo=? WHERE itemID=?"
+	 * ; PreparedStatement preparedStmt = con.prepareStatement(query); // binding
+	 * values preparedStmt.setInt(1, 0); preparedStmt.setString(2, firstName);
+	 * preparedStmt.setString(3, lastName); preparedStmt.setString(4, address);
+	 * preparedStmt.setString(5, description); preparedStmt.setString(6,
+	 * speciality); preparedStmt.setString(7, qualification);
+	 * preparedStmt.setString(8, gender); preparedStmt.setString(9, phoneNo); //
+	 * execute the statement preparedStmt.execute(); con.close(); output =
+	 * "Updated successfully"; } catch (Exception e) { output =
+	 * "Error while updating the item."; System.err.println(e.getMessage()); }
+	 * return output; }
+	 */
 
 	public String deletedocter(String docID) {
 		String output = "";
@@ -212,4 +192,3 @@ public class Docter {
 	}
 
 }
-
