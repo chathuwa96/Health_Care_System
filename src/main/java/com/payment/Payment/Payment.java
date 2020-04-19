@@ -15,14 +15,16 @@ public class Payment {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			// Provide the correct details: DBServer/DBName, username, password
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hospital?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://127.0.0.1:3306/payment?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					"root", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return con;
 	}
-	
+
 	public String readItems() {
 		String output = "";
 
@@ -34,7 +36,7 @@ public class Payment {
 			}
 
 			// Prepare the html table to be displayed
-			output = "<table border=\\\"1\\\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Update</th><th>Remove</th></tr>";
+			output = "<table border=\\\"1\\\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Remove</th></tr>";
 
 			String query = "select * from payment";
 			Statement stmt = con.createStatement();
@@ -50,9 +52,8 @@ public class Payment {
 				String hosptlCharges = Double.toString(rs.getDouble("hosptlCharges"));
 				String pharmBill = Double.toString(rs.getDouble("pharmBill"));
 
-				
 				// Add into the html table
-				//output += "<tr><td>" + itemID + "</td>";
+				// output += "<tr><td>" + itemID + "</td>";
 				output += "<tr><td>" + paymentId + "</td>";
 				output += "<td>" + docName + "</td>";
 				output += "<td>" + patiName + "</td>";
@@ -61,12 +62,9 @@ public class Payment {
 				output += "<td>" + hosptlCharges + "</td>";
 				output += "<td>" + pharmBill + "</td>";
 
-
 				// buttons
-				output += "<td><input name=\"btnUpdate\" type=\"button\"        "
-						+ "value=\"Update\" class=\"btn btn-secondary\"></td>"
-						+ "<td><form method=\"post\" action=\"items.jsp\">"
-						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"      "
+				output += 
+						 "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"      "
 						+ "class=\"btn btn-danger\">" + "<input name=\"itemID\" type=\"hidden\" value=\"" + paymentId
 						+ "\">" + "</form></td></tr>";
 			}
@@ -83,113 +81,6 @@ public class Payment {
 		return output;
 
 	}
-
-	// Read data
-	/*public String readItems() {
-		String output = "";
-
-		try {
-			Connection con = connect();
-
-			if (con == null) {
-				return "Error while connecting to the database for reading.";
-			}
-
-			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>Payment ID</th><th>Doctor Name</th><th>Patient Name</th><th>Doctor Charges</th><th>Booking Charges</th><th>Hospital Charges</th><th>Pharmeasy Bill</th><th>Remove</th></tr>";
-
-			String query = "select * from payment";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-
-			// iterate through the rows in the result set
-			/*while (rs.next()) {
-				String paymentId = Integer.toString(rs.getInt("paymentId"));
-				String docName = rs.getString("docName");
-				String patiName = rs.getString("patiName");
-				String docCharges = Double.toString(rs.getDouble("docCharges"));
-				String booknCharges = Double.toString(rs.getDouble("booknCharges"));
-				String hosptlCharges = Double.toString(rs.getDouble("hosptlCharges"));
-				String pharmBill = Double.toString(rs.getDouble("pharmBill"));
-			
-			while (rs.next()) {
-				String paymentId = Integer.toString(rs.getInt("paymentId"));
-				String docName = rs.getString("docName");
-				String patiName = rs.getString("patiName");
-				String docCharges = Double.toString(rs.getDouble("docCharges"));
-				String booknCharges = Double.toString(rs.getDouble("booknCharges"));
-				String hosptlCharges = Double.toString(rs.getDouble("hosptlCharges"));
-				String pharmBill = Double.toString(rs.getDouble("pharmBill"));
-				
-
-				// Add into the html table
-				output += "<tr><td>" + paymentId + "</td>";
-				output += "<td>" + docName + "</td>";
-				output += "<td>" + patiName + "</td>";
-				output += "<td>" + docCharges + "</td>";
-				output += "<td>" + booknCharges + "</td>";
-				output += "<td>" + hosptlCharges + "</td>";
-				output += "<td>" + pharmBill + "</td>";
-
-				// buttons
-				output += "<td><input name=\"btnUpdate\" type=\"button\"        "
-						+ "value=\"Update\" class=\"btn btn-secondary\"></td>"
-						+ "<td><form method=\"post\" action=\"items.jsp\">"
-						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"      "
-						+ "class=\"btn btn-danger\">" + "<input name=\"itemID\" type=\"hidden\" value=\"" + paymentId
-						+ "\">" + "</form></td></tr>"; 
-			}
-
-			con.close();
-
-			// Complete the html table
-			output += "</table>";
-			
-		} catch (Exception e) {
-			output = "Error while reading the items.";
-			System.err.println(e.getMessage());
-		}
-
-		return output;
-
-	}*/
-
-	// Insert data to DB
-	/*
-	 * public String insertPayment(String docName,String patiName,String
-	 * docCharges,String booknCharges,String hosptlCharges,String pharmBill) {
-	 * String output = "";
-	 * 
-	 * try {
-	 * 
-	 * Connection con = connect();
-	 * 
-	 * if(con == null) {
-	 * 
-	 * return "DB Insert error."; }
-	 * 
-	 * // create a prepared statement String query =
-	 * "INSERT INTO `payment`(`paymentId`, `docName`, `patiName`, `docCharges`, `booknCharges`, `hosptlCharges`, `pharmeasyBill`)"
-	 * + "VALUES (?,?,?,?,?,?,?)";
-	 * 
-	 * PreparedStatement preparedStmt = con.prepareStatement(query);
-	 * 
-	 * // binding values preparedStmt.setInt(1, 0); preparedStmt.setString(100,
-	 * docName); preparedStmt.setString(100, patiName); preparedStmt.setDouble(4,
-	 * Double.parseDouble(docCharges)); preparedStmt.setDouble(4,
-	 * Double.parseDouble(booknCharges)); preparedStmt.setDouble(4,
-	 * Double.parseDouble(hosptlCharges)); preparedStmt.setDouble(4,
-	 * Double.parseDouble(pharmBill));
-	 * 
-	 * // execute the statement preparedStmt.execute(); con.close();
-	 * 
-	 * output = "Inserted successfully";
-	 * 
-	 * } catch (Exception e) { output = "Error while inserting the item.";
-	 * System.err.println(e.getMessage()); }
-	 * 
-	 * return output; }
-	 */
 
 	public String insertPayment(String docName, String patiName, String docCharges, String booknCharges,
 			String hosptlCharges, String pharmBill) {
@@ -229,27 +120,35 @@ public class Payment {
 
 	}
 
-	/*
-	 * public String deleteItem(String paymentId) { String output = "";
-	 * 
-	 * try { Connection con = connect();
-	 * 
-	 * if (con == null) { return
-	 * "Error while connecting to the database for deleting."; }
-	 * 
-	 * // Create a prepared statement String query =
-	 * "delete from items where paymentId=?";
-	 * 
-	 * PreparedStatement preparedStmt = con.prepareStatement(query);
-	 * 
-	 * // binding values preparedStmt.setInt(1, Integer.parseInt(paymentId));
-	 * 
-	 * // execute the statement preparedStmt.execute(); con.close();
-	 * 
-	 * output = "Deleted successfully"; } catch (Exception e) { output =
-	 * "Error while deleting"; System.err.println(e.getMessage()); }
-	 * 
-	 * return output; }
-	 */
+	public String deletePayment(String paymentId) {
+		String output = "";
+
+		try {
+			Connection con = connect();
+
+			if (con == null) {
+				return "Error while connecting to the database for deleting.";
+			}
+
+			// create a prepared statement
+			String query = "delete from payment where paymentId=?";
+
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(paymentId));
+
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+
+			output = "Deleted successfully";
+		} catch (Exception e) {
+			output = "Error while deleting the appointment.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
 
 }
