@@ -13,7 +13,7 @@ public class Payment {
 		Connection con = null;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			// Provide the correct details: DBServer/DBName, username, password
 			con = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/payment?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
@@ -50,7 +50,7 @@ public class Payment {
 				String docCharges = Double.toString(rs.getDouble("docCharges"));
 				String booknCharges = Double.toString(rs.getDouble("booknCharges"));
 				String hosptlCharges = Double.toString(rs.getDouble("hosptlCharges"));
-				String pharmBill = Double.toString(rs.getDouble("pharmBill"));
+				String pharmBill = Double.toString(rs.getDouble("pharmeasyBill"));
 
 				// Add into the html table
 				// output += "<tr><td>" + itemID + "</td>";
@@ -63,10 +63,8 @@ public class Payment {
 				output += "<td>" + pharmBill + "</td>";
 
 				// buttons
-				output += 
-						 "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"      "
-						+ "class=\"btn btn-danger\">" + "<input name=\"itemID\" type=\"hidden\" value=\"" + paymentId
-						+ "\">" + "</form></td></tr>";
+				output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\" btnUpdate btn btn-secondary\"></td> <td><form method=\"post\" action=\"docter.jsp\">  <input name=\"btnRemove\" type=\"submit\" value=\"Remove\" class=\"btn btn-danger\">  <input name=\"hidItemIDDelete\" type=\"hidden\" value=\""
+						+ paymentId + "\">" + "</form></td>      </tr>";
 			}
 
 			con.close();
@@ -86,9 +84,8 @@ public class Payment {
 			String hosptlCharges, String pharmBill) {
 
 		String output = "";
-		// create a prepared statement
-		String query = "INSERT INTO `payment`(`paymentId`, `docName`, `patiName`, `docCharges`, `booknCharges`, `hosptlCharges`, `pharmeasyBill`)"
-				+ "VALUES (?,?,?,?,?,?,?)";
+		
+		
 		try {
 
 			Connection con = connect();
@@ -97,17 +94,20 @@ public class Payment {
 
 				return "DB Insert error.";
 			}
+			
+			// create a prepared statement
+			String query = "insert into payment values(?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			// binding values
 			preparedStmt.setInt(1, 0);
-			preparedStmt.setString(100, docName);
-			preparedStmt.setString(100, patiName);
-			preparedStmt.setDouble(100, Double.parseDouble(docCharges));
-			preparedStmt.setDouble(100, Double.parseDouble(booknCharges));
-			preparedStmt.setDouble(100, Double.parseDouble(hosptlCharges));
-			preparedStmt.setDouble(100, Double.parseDouble(pharmBill));
+			preparedStmt.setString(2, docName);
+			preparedStmt.setString(3, patiName);
+			preparedStmt.setDouble(4, Double.parseDouble(docCharges));
+			preparedStmt.setDouble(5, Double.parseDouble(booknCharges));
+			preparedStmt.setDouble(6, Double.parseDouble(hosptlCharges));
+			preparedStmt.setDouble(7, Double.parseDouble(pharmBill));
 
 			output = "Inserted successfully";
 
@@ -146,6 +146,44 @@ public class Payment {
 			output = "Deleted successfully";
 		} catch (Exception e) {
 			output = "Error while deleting the appointment.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
+	
+	public String updatePayment(String paymentId,String docName, String patiName, String docCharges, String booknCharges,String hosptlCharges, String pharmBill) {
+		String output = "";
+
+		try {
+			Connection con = connect();
+
+			if (con == null) {
+				return "Error while connecting to the database for updating.";
+			}
+
+			// create a prepared statement
+			String query = "UPDATE `payment` SET `docName`=?,`patiName`=?,`docCharges`=?,`booknCharges`=?,`hosptlCharges`=?,`pharmeasyBill`=?";
+
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			preparedStmt.setInt(1, 0);
+			preparedStmt.setString(2, docName);
+			preparedStmt.setString(3, patiName);
+			preparedStmt.setDouble(4, Double.parseDouble(docCharges));
+			preparedStmt.setDouble(5, Double.parseDouble(booknCharges));
+			preparedStmt.setDouble(6, Double.parseDouble(hosptlCharges));
+			preparedStmt.setDouble(7, Double.parseDouble(pharmBill));
+
+
+
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+
+			output = "Updated successfully";
+		} catch (Exception e) {
+			output = "Error while updating the Appointment.";
 			System.err.println(e.getMessage());
 		}
 

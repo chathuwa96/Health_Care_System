@@ -5,7 +5,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-//import javax.ws.rs.PUT;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -14,8 +14,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
-//import com.google.gson.JsonObject;
-//import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 //For REST Service 
 //import javax.ws.rs.*;
@@ -36,12 +36,6 @@ public class MyResource {
 
 	Payment payObj = new Payment();
 
-	/**
-	 * Method handling HTTP GET requests. The returned object will be sent to the
-	 * client as "text/plain" media type.
-	 *
-	 * @return String that will be returned as a text/plain response.
-	 */
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -62,11 +56,33 @@ public class MyResource {
 			@FormParam("docCharges") String docCharges,
 			@FormParam("booknCharges") String booknCharges, 
 			@FormParam("hosptlCharges") String hosptlCharges,
-			@FormParam("pharmBill") String pharmBill) 
+			@FormParam("pharmeasyBill") String pharmBill) 
     {  
     	String output = payObj.insertPayment(docName, patiName, docCharges, booknCharges, hosptlCharges, pharmBill);  
     	return output; 
     }
+	
+	@PUT 
+    @Path("/update") 
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.TEXT_PLAIN) 
+    public String updateItem(String itemData) {  
+
+    	//Convert the input string to a JSON object  
+    	JsonObject payObj = new JsonParser().parse(itemData).getAsJsonObject(); 
+     
+    	//Read the values from the JSON object 
+    	int paymentId = payObj.get("paymentId").getAsInt();  
+    	String docName = payObj.get("docName").getAsString();  
+    	String docCharges = payObj.get("docCharges").getAsString();  
+    	String booknCharges = payObj.get("booknCharges").getAsString();  
+    	String hosptlCharges = payObj.get("hosptlCharges").getAsString();  
+    	String pharmBill = payObj.get("pharmeasyBill").getAsString(); 
+     
+        String output = payObj.updatePayment(paymentId,docName, docCharges,  booknCharges, hosptlCharges, pharmBill); 
+     
+    	return output; 
+    } 
 	
 
 	 @DELETE 
